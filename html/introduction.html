@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/lottery.css">
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<title>心理测试</title>
+</head>
+<body>
+	<header>感谢您参与本次实验</header>
+	
+	<div class="one">
+		<p>国际旅行护照需要注意一下几点：
+1.是由一国政府认证颁发的为国际旅行为目的证件；
+2.身份证、护照、考试注册报名相关信息必须保持一致。如果你的护照过期你将会损失此次CFA考试的注册费和失去本次入场CFA考试资格；
+3.考生必须带上本人的身份证与有效的国际护照进入考场；
+4.一定是身份证与护照的原件，复印件是不被认可，同时保证身份证和护照是在有效期内；
+5.护照必须包含你的；名字、出生年月日、护照号码、到期日、签发的国家名称；
+6.护照与身份证相关证件需是打印，手写不被接受；
+7.包括护照资料页上有你可辨认照片。
+</p>
+		<button class="go2">下一页</button>
+	</div>
+
+	<div class="two">
+		<p>作者：admin 整理  CFA® 2015年11月24日 来源：互联网  CFA® 打印　
+点击返回前页(此行不会被打印)
+美国特许金融分析师（CFA）协会为了建立全球统一考试标准，要求全球任何一个国家的CFA考生身份认证必须是一个有效的国际认可的护照，这一严格的标准是CFA协会识别和确认CFA考试身份，用于识别考生后续的成绩与资格认证身份。</p>
+		<button class="go3">下一页</button>
+	</div>
+
+	<div class="three">
+		<p>如果你的护照过期？
+
+考生可以在自己的帐户更新日期、护照号码、签发国家[finance.gaodun.cn/account/Pages/index.aspx]。
+所有其他的身份变动，包括名称，必须更新提交身份信息变更申请表[https://finance.gaodun.cn/Forms/name_change.pdf]。
+考试期间的高峰期处理时间为3-5个工作天内收到。</p>
+		<button class="start">开始试验</button>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$(".go2").click(function(event) {
+			/* Act on the event */
+			$(".one").css('display', 'none');
+			$(".two").css('display', 'block');
+			$(".three").css('display', 'none');
+		});
+		$(".go3").click(function(event) {
+			/* Act on the event */
+			$(".one").css('display', 'none');
+			$(".two").css('display', 'none');
+			$(".three").css('display', 'block');
+		});
+		$(".start").click(function(event) {
+			/* Act on the event */
+			window.location.href="lottery.html";
+		});
+		
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

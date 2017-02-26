@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/lottery.css">
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<title>心理测试</title>
+</head>
+<body>
+	<header>感谢您参与本次实验</header>
+
+	<!-- 抛硬币首页 -->
+	<div class="index">
+		<p>本试次硬币价值:</p>
+		<p class="price">7元</p>
+		<button class="gotwo">点击继续</button>
+	</div>
+
+	<!-- 提示语：记录or随机 -->
+	<div class="tishi">
+		<p>记录</p>
+		<button class="gothree">点击继续</button>
+	</div>
+
+	<!-- 被试预测结果 -->
+	<div class="predict">
+		<p>请选择您的预测结果</p>
+		<button class="zheng">正面</button>
+		<button class="bei">背面</button>
+		<!-- <button class="record">记录</button> -->
+		<button class="gofour">点击继续</button>
+	</div>
+
+	<!-- 抛硬币结果 -->
+	<div class="result">
+		<p>本次抛硬币结果</p>
+		<p class="out">正面</p>
+		<button class="gofive">点击继续</button>
+	</div>
+
+	<!-- 被试选择猜测正确与否 -->
+	<div class="YorN">
+		<p>请选择您的猜测是否正确</p>
+		<button class="yes">是</button>
+		<button class="no">否</button>
+		<button class="gosix">点击继续</button>
+	</div>
+
+	<!-- 电脑给出最终结果 -->
+	<div class="final">
+		<p class="note">恭喜你对了</p>
+		<button class="gonew">重新开始</button>
+	</div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var predict;  //被试预测本次抛硬币的结果，0表示正面，1表示背面
+		var pre_result;  //被试选择猜测是否正确，0表示正确，1表示不正确
+		var flag; //标记抛硬币的真实结果,0为正面，1为背面，初始化为正面
+		var result=['正面','背面'];
+		var tmp=['是','否'];
+		var count=1;//表示被试当前实验是第几次
+		var win=0;//表示被试赢钱的数量
+		var num;//金额的随机数,初始化为7元
+		var note=["记录","随机"];//提示语：记录，随机
+		var record;//标记被试选择是否记录预测结果，0为记录，1为随机,初始化为记录
+
+
+		//后台显示第一次的实验金额、提示语、抛硬币结果
+		// console.log("本次实验金额:7元");
+		// console.log("提示语:记录")
+		// console.log("本次抛硬币的结果:正面");
+
+		// 随机出现本次实验的金额
+		function random_price() {
+			num=parseInt(Math.random()*5+3);
+			console.log("本次实验金额:",num);
+			if (num==3) {
+				$(".price").text('3元');
+			}
+			if (num==4) {
+				$(".price").text('4元');
+			}
+			if (num==5) {
+				$(".price").text('5元');
+			}
+			if (num==6) {
+				$(".price").text('6元');
+			}
+			if (num==7) {
+				$(".price").text('7元');
+			}
+		}
+
+		//电脑随机出现提示语：记录or随机
+		function random_note(){
+			record=parseInt(Math.random()*2);
+			console.log("提示语:",note[record]);
+			if(record==0){
+				$(".tishi p").text('记录');
+			}
+			if(record==1){
+				$(".tishi p").text('随机');
+			}
+		}
+
+		// 随机出现本次抛硬币的结果
+		function random_result() {
+			flag=parseInt(Math.random()*2);
+			console.log("本次抛硬币的结果:",result[flag]);
+			if (flag==0) {
+				$(".out").text('正面');
+			}
+			if (flag==1) {
+				$(".out").text('背面');
+			}
+		}
+
+		random_price();
+		random_note();
+		random_result();
+
+		//电脑判断被试是否猜对
+		function judge() {
+			console.log("record:",record);
+			if (record==0) {//无机会的小组
+				if (flag==predict) {
+					win=win+num;
+					console.log("钱数:",win);
+					$(".final .note").html('您猜对了!已赢钱'+win+"元"); 
+				}
+				else if(flag!=predict){	
+					win=win-num;
+					console.log("钱数:",win);
+					$(".final .note").html('您猜错了!已赢钱'+win+"元");
+				}
+			}
+			else if (record==1) {//有机会的小组
+				if (pre_result==0) {//被试选择猜对
+					win=win+num;
+					console.log("钱数:",win);	
+					$(".final .note").html('您猜对了!已赢钱'+win+"元");
+				}
+				else if (pre_result==1) {//被试选择猜错
+					win=win-num;
+					console.log("钱数:",win);
+					$(".final .note").html('您猜错了!已赢钱'+win+"元");
+				}
+			}
+		}
+
+
+		
+
+		// 首页点击继续
+		$(".gotwo").click(function(event) {
+			$(".index").css('display', 'none');
+			$(".tishi").css('display', 'block');
+			$(".predict").css('display', 'none');
+			$(".result").css('display', 'none');
+			$(".YorN").css('display', 'none');
+			$(".final").css('display', 'none');
+		});
+
+		//提示点击继续
+		$(".gothree").click(function(event) {
+			$(".index").css('display', 'none');
+			$(".tishi").css('display', 'none');
+			$(".predict").css('display', 'block');
+			$(".result").css('display', 'none');
+			$(".YorN").css('display', 'none');
+			$(".final").css('display', 'none');
+		});
+
+		// 选择预测结果	
+		$(".zheng").click(function(event) {
+			$(".zheng").css('background', '#48D1CC');
+			$(".bei").css('background', '#E6E6FA');
+			predict=0;//0表示正面
+			console.log("被试预测结果:",result[predict]);
+		});
+		$(".bei").click(function(event) {
+			$(".zheng").css('background', '#E6E6FA');
+			$(".bei").css('background', '#48D1CC');
+			predict=1;//1表示背面
+			console.log("被试预测结果:",result[predict]);
+		});
+		$(".gofour").click(function(event) {
+			if (predict==0 || predict==1) {
+				$(".index").css('display', 'none');
+				$(".tishi").css('display', 'none');
+				$(".predict").css('display', 'none');
+				$(".result").css('display', 'block');
+				$(".YorN").css('display', 'none');
+				$(".final").css('display', 'none');
+			}
+			else{
+				alert("请预测一个结果!");
+			}		
+		});
+		
+		// 抛硬币结果点击继续
+		$(".gofive").click(function(event) {
+			$(".index").css('display', 'none');
+			$(".tishi").css('display', 'none');
+			$(".predict").css('display', 'none');
+			$(".result").css('display', 'none');
+			$(".YorN").css('display', 'block');
+			$(".final").css('display', 'none');
+		});
+
+
+		// 选择猜测是否正确
+		$(".yes").click(function(event) {
+			$(".yes").css('background', '#48D1CC');
+			$(".no").css('background', '#E6E6FA');
+			pre_result=0;//0表示猜对
+			console.log("被试选择猜测是否正确:",tmp[pre_result]);
+			judge();
+		});
+		$(".no").click(function(event) {
+			$(".yes").css('background', '#E6E6FA');
+			$(".no").css('background', '#48D1CC');
+			pre_result=1;//1表示猜错
+			console.log("被试选择猜测是否正确:",tmp[pre_result]);
+			judge();
+		});
+		$(".gosix").click(function(event) {
+			if (pre_result==1 || pre_result==0) {
+				$(".index").css('display', 'none');
+				$(".tishi").css('display', 'none');
+				$(".predict").css('display', 'none');
+				$(".result").css('display', 'none');
+				$(".YorN").css('display', 'none');
+				$(".final").css('display', 'block');
+			}
+			else{
+				alert("请选择猜测是否正确!");
+			}
+			
+		});
+
+
+
+		// 重新开始
+		$(".gonew").click(function(event) {
+			$(".index").css('display', 'block');
+			$(".predict").css('display', 'none');
+			$(".result").css('display', 'none');
+			$(".YorN").css('display', 'none');
+			$(".final").css('display', 'none');
+			// random_price();
+			// random_result();
+			// record=0;//还原为初始化0，为记录
+			
+			//生成下一次实验的金额、提示语、抛硬币的结果
+			random_price();
+			random_note();
+			random_result();
+			
+			$(".zheng").css('background', '#E6E6FA');
+			$(".bei").css('background', '#E6E6FA');
+			$(".yes").css('background', '#E6E6FA');
+			$(".no").css('background', '#E6E6FA');
+			$(".record").css('background', '#FFF0F5');
+			count++;
+			// console.log(count);
+			if (count==10) {//此处控制一个被试总共可以做多少次实验
+				$(".gonew").css('display', 'none');
+			}
+		});	
+
+
+							
+
+
+		
+
+
+		
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
